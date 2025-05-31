@@ -1,0 +1,33 @@
+.start-button {
+  /* padding: 1rem 2rem; */
+  background-color: #dc2626;
+  color: white;
+  font-weight: 600;
+  font-size: 1.125rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.start-button:hover {
+  background-color: #b91c1c;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Slide-down animation */
+@keyframes slideDown {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(150px);
+    opacity: 1;
+  }
+}
+
+.slide-down {
+  animation: slideDown 1s ease-out forwards;
+}

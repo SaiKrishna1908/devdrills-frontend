@@ -2,7 +2,7 @@ export default function Login() {
 
   const handleClick = () => { 
     
-    window.location.href = 'https://us-east-2wcziv4ajn.auth.us-east-2.amazoncognito.com/login?client_id=2j3cu5iebman5jpa4uja4lv864&response_type=code&scope=email+openid+phone&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Fhome';
+    window.location.href = 'https://us-east-2wcziv4ajn.auth.us-east-2.amazoncognito.com/login?client_id=2j3cu5iebman5jpa4uja4lv864&response_type=code&scope=email+openid+phone&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Fexchange';
   }
   return (
     <div className="min-h-screen bg-[#ede1da] flex flex-col items-center justify-start py-16">

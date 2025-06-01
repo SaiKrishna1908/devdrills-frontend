@@ -19,7 +19,7 @@ export default function Login() {
       <button 
       onClick={() => handleClick()}
       className="flex items-center gap-2 bg-red-600 text-white-700 font-medium text-lg mx-10 my-10 rounded-lg shadow-md hover:shadow-lg border border-gray-300 hover:bg-red-500 transition p-4">        
-        Login
+        Login with Email
       </button>
     </div>
   );

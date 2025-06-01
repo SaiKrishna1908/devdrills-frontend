@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-import './Quiz.css';
-import axios from 'axios';
+import { useEffect, useRef, useState } from "react";
+import "./Quiz.css";
+import axios from "axios";
 
 type Question = {
   situation: string;
@@ -22,11 +22,19 @@ export default function Quiz() {
   const fetchData = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get('http://localhost:8080/question', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      console.log("Response:", response.data);
-      setQuestions(response.data);
+
+      await axios
+        .get("http://localhost:8080/question", {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+          console.log("Response:", response.data);
+          setQuestions(response.data);
+        })
+        .catch((error) => {
+          console.log("Error is " + error);
+          console.log(error.response.status);
+        });
     } catch (error) {
       console.error("Error fetching questions:", error);
     }
@@ -46,27 +54,24 @@ export default function Quiz() {
   return questions.length === 0 ? (
     <p>Loading...</p>
   ) : (
-    <div className="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full my-10 quiz-container">
-      <h1 className="text-2xl font-bold mb-6 text-gray-800">Quiz</h1>
-      <p className="text-lg font-medium mb-4 text-gray-700">
-        {questions[currentQuestionIdx]['situation']}
-      </p>
-      <div className="space-y-4">
-        {questions[currentQuestionIdx].options.map((option, index) => (
-          <label
-            key={index}
-            className="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg border hover:bg-gray-100 cursor-pointer"
-          >
-            <input
-              type="radio"
-              name="quiz-option"
-              value={option}
-              className="form-radio h-5 w-5 text-blue-600"
-            />
-            <span className="text-gray-700">{option}</span>
-          </label>
-        ))}
-      </div>      
+    <div className="bg-[#ecd3c2] flex space-y-30 space-x-9 shadow-lg rounded-lg p-8 max-w-5xl w-full my-10 quiz-container justify-center">
+      <div>
+        <h1 className="text-2xl font-bold mb-6 text-[#123c69] ">Situation</h1>
+        <p className="text-lg font-medium mb-4 text-[#ac3b61]">
+          {questions[currentQuestionIdx]["situation"]}
+        </p>
+      </div>
+      <div className="space-y-7 w-full">
+      {questions[currentQuestionIdx].options.map((option, index) => (
+        <div
+          key={index}
+          className="flex items-center justify-center bg-gray-50 p-4 rounded-lg border border-gray-300 hover:border-[#123c69] hover:shadow-lg hover:scale-105 transition-transform cursor-pointer"
+          onClick={() => console.log(`Selected: ${option}`)} // Handle option selection
+        >
+          <span className="text-[#ac3b61] font-medium">{option}</span>
+        </div>
+      ))}
+    </div>
     </div>
   );
 }

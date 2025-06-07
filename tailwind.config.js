@@ -1,7 +1,7 @@
 // tailwind.config.js
 module.exports = {
   content: ["./src/**/*.{html,js,ts,jsx,tsx}", "./index.html"], // Adjust based on your project
-  theme: {
+  theme: {    
     extend: {
       keyframes: {
         slideDown: {

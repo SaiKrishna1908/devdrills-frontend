@@ -19,18 +19,18 @@ type Question = {
 type QuizProps = {
   currentQuestionIdx: number;
   setCanGoNext: (value: boolean) => void;
-  setCurrentQuestionIdx: (value: number) => void;
+  isCorrectAnswer: boolean;
+  setIsCorrectAnswer: (value: boolean) => void;
 };
 
 export default function Quiz({
   currentQuestionIdx,
-  setCanGoNext,
-  setCurrentQuestionIdx,
+  isCorrectAnswer,
+  setIsCorrectAnswer,
 }: QuizProps) {
   const [questions, setQuestions] = useState<[Question] | []>([]);
   const hasFetched = useRef(false);
   const [selectedAnswer, setSelectedAnswer] = useState("");
-  const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -45,44 +45,49 @@ export default function Quiz({
           setQuestions(response.data);
         })
         .catch((error) => {
-          localStorage.removeItem("token")
+          localStorage.removeItem("token");
           console.log("Error is " + error);
-          return <Navigate to='/'></Navigate>          
+          <Navigate to="/"></Navigate>;
         });
     } catch (error) {
-      console.error("Error fetching questions:", error);
+      localStorage.removeItem("token");
+      console.log("Error is " + error);
+      <Navigate to="/"></Navigate>;
     }
   };
 
   useEffect(() => {
     if (!hasFetched.current) {
-      hasFetched.current = true; // Mark as fetched
+      hasFetched.current = true;
       fetchData();
     }
   }, []);
 
-  const handleSubmit = () => {
-    setCurrentQuestionIdx(currentQuestionIdx + 1);
+  const getClassNames = (optionIdx: number) => {
+    const disableCss = isCorrectAnswer
+      ? " pointer-events-none opacity-50 "
+      : " ";
+    return selectedAnswer !== questions[currentQuestionIdx].correctOption &&
+      selectedAnswer === questions[currentQuestionIdx].options[optionIdx] &&
+      selectedAnswer !== ""
+      ? `border-red-700 animate-pulse ${disableCss}`
+      : selectedAnswer === questions[currentQuestionIdx].options[optionIdx]
+      ? "border-green-600 animate-bounce"
+      : "border-gray-300";
   };
 
-  const getClassNames = (optionIdx: number) => {
-    // console.log("Render Called")
-    // console.log("isCurrentOptionCorrect "+ isCurrentOptionCorrect)
-    console.log("isCorrectAnswer "+ isCorrectAnswer)
-    // console.log("result "+(isCorrectAnswer && !isCurrentOptionCorrect))    
-    const disableCss = (isCorrectAnswer) ? ' pointer-events-none opacity-50 ' : ' '
-    return  (selectedAnswer !== questions[currentQuestionIdx].correctOption &&
-              selectedAnswer === questions[currentQuestionIdx].options[optionIdx] &&
-              selectedAnswer !== "")
-                ?  `border-red-700 animate-pulse ${disableCss}`
-                : selectedAnswer ===
-                  questions[currentQuestionIdx].options[optionIdx]
-                ? "border-green-600 animate-bounce"
-                : "border-gray-300";
-  }
+  console.log(`is correctAnswer: ${isCorrectAnswer}`);
 
   return questions.length === 0 ? (
-    <p>Loading...</p>
+    <div className="skeleton-container max-w-5xl w-full">
+      <div className="skeleton skeleton-title"></div>
+      <div className="skeleton skeleton-paragraph"></div>
+      <div className="skeleton skeleton-paragraph"></div>
+      <div className="skeleton skeleton-option"></div>
+      <div className="skeleton skeleton-option"></div>
+      <div className="skeleton skeleton-option"></div>
+      <div className="skeleton skeleton-option"></div>
+    </div>
   ) : (
     <div className="bg-[#ecd3c2] flex space-y-30 space-x-9 shadow-lg rounded-lg p-8 max-w-5xl w-full my-10 quiz-container justify-center">
       <div className="h-fill space-y-7">
@@ -90,34 +95,40 @@ export default function Quiz({
         <div className="flex flex-col justify-start ">
           <p className="text-xl font-medium mb-4 text-[#ac3b61]">
             {questions[currentQuestionIdx]["situation"]}
-          </p>          
-            {selectedAnswer === questions[currentQuestionIdx].correctOption ? (
-              <>
-                <h2 className="text-2xl font-normal mb-6 text-[#134c70] ">Notes</h2>
-                <p className="text-lg, font-normal, text-[#ac4b71]">
-                  {questions[currentQuestionIdx].notes}
-                </p>
-              </>
-            ) : (
-              <></>
-            )}          
+          </p>
+          {selectedAnswer === questions[currentQuestionIdx].correctOption ? (
+            <>
+              <h2 className="text-2xl font-normal mb-6 text-[#134c70] ">
+                Correct
+              </h2>
+              <p className="text-lg, font-normal, text-[#ac4b71]">
+                {questions[currentQuestionIdx].notes}
+              </p>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
       <div className="space-y-7 w-full">
         {questions[currentQuestionIdx].options.map((option, index) => (
           <div
             key={index}
-            
-            className={`flex items-center justify-center bg-gray-50 p-4 rounded-lg border  hover:border-[#123c69] hover:shadow-lg hover:scale-105 transition-transform cursor-pointer  ${getClassNames(index)}`}
+            className={`flex items-center justify-center bg-gray-50 p-4 rounded-lg border  hover:border-[#123c69] hover:shadow-lg hover:scale-105 transition-transform cursor-pointer  ${getClassNames(
+              index
+            )} ${isCorrectAnswer ? " pointer-events-none " : ""}`}
             onClick={() => {
               setSelectedAnswer(option);
 
-              if (option === questions[index].correctOption) {
-                setIsCorrectAnswer((_) => true)
-                // setTimeout(() => setCurrentQuestionIdx(currentQuestionIdx+1), 5000)                
+              if (
+                option === questions[currentQuestionIdx].correctOption ||
+                option === questions[currentQuestionIdx].expectedAnswer
+              ) {
+                setIsCorrectAnswer(true);
               }
+
               console.log(`Selected: ${option}`);
-              console.log(questions[index].correctOption);
+              console.log(questions[currentQuestionIdx].correctOption);
             }}
           >
             <span className="text-[#ac3b61] font-medium">{option}</span>

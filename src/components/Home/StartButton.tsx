@@ -5,16 +5,16 @@ type StartButtonProps = {
   getHasStartedExam: () => boolean,
   setHasStartedExam: (value: boolean) => void
   canGoNext: boolean
-  setNextQuestion: (updater: (prev: number) => number) => void;
+  handleNextQuestion: () => void;
 };
 
-export default function StartButton({canGoNext, getHasStartedExam, setHasStartedExam, setNextQuestion}: StartButtonProps) {  
+export default function StartButton({canGoNext, getHasStartedExam, setHasStartedExam, handleNextQuestion}: StartButtonProps) {  
   const [shouldSlideDown, setShouldSlideDown] = useState(false);
 
   const handleClick = async () => {
 
     if (getHasStartedExam())  {
-      setNextQuestion((prev) => prev+1)      
+      handleNextQuestion();
     } else {
       setHasStartedExam(true);
       setShouldSlideDown(true);    

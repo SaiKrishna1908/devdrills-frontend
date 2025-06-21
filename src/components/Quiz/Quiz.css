@@ -13,3 +13,50 @@
 .quiz-container {
   animation: fadeIn 0.5s ease-out;
 }
+
+/* Skeleton container */
+.skeleton-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+/* Skeleton base styles */
+.skeleton {
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Skeleton for title */
+.skeleton-title {
+  width: 60%;
+  height: 24px;
+}
+
+/* Skeleton for paragraphs */
+.skeleton-paragraph {
+  width: 100%;
+  height: 16px;
+}
+
+/* Skeleton for options */
+.skeleton-option {
+  width: 100%;
+  height: 48px;
+  margin-top: 0.5rem;
+}
+
+/* Shimmer animation */
+@keyframes shimmer {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #f0f0f0;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}

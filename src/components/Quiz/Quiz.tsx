@@ -35,9 +35,9 @@ export default function Quiz({
   const fetchData = async () => {
     try {
       const token = localStorage.getItem("token");
-
+      const URL = import.meta.env.VITE_API_URL
       await axios
-        .get("http://localhost:8080/question", {
+        .get(`${URL}/question`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {

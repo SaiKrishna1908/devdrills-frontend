@@ -19,9 +19,11 @@ export default function TokenExchange() {
           return;
         }
 
+        const URL = import.meta.env.VITE_API_URL
+
         // Make the API call to exchange the code for a JWT
         const response = await axios.get(
-          `http://localhost:8080/api/auth/authenticate/${code}`
+          `${URL}/api/auth/authenticate/${code}`
         );
 
         // Save the token in localStorage or any other storage mechanism

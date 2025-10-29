@@ -1,5 +1,13 @@
 {
   "rewrites": [
+    { "source": "/api/(.*)", "destination": "https://api.devdrills.krishna1908.me/$1" },    
+    { "source": "/.well-known/assetlinks.json", "destination": "/assetlinks.json" },
     { "source": "/(.*)", "destination": "/" }
+  ],
+  "redirects": [
+    { "source": "https://www.devdrills.krishna1908.me/(.*)", "destination": "https://devdrills.krishna1908.me/$1", "permanent": true }
+  ],
+  "headers": [    
+    { "source": "/api/(.*)", "headers": [ { "key": "Cache-Control", "value": "no-store" } ] }
   ]
 }

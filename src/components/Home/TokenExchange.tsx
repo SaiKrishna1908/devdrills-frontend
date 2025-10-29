@@ -30,7 +30,7 @@ export default function TokenExchange() {
         localStorage.setItem("token", response.data.token);
 
         // Redirect to "/home" after successful token exchange
-        navigate("/home");
+        window.location.href = "/home";
       } catch (error) {
         console.error("Error exchanging code for token:", error);
         navigate("/"); // Redirect to login on error

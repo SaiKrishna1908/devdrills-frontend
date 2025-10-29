@@ -1,0 +1,202 @@
+/* Streak Container */
+.streak-container {
+  position: fixed;
+  top: 50%;
+  right: 150px;
+  transform: translateY(-65%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 50;
+}
+
+/* Streak Counter */
+.streak-counter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  padding: 8px 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+}
+
+.streak-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.streak-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Matchstick Wrapper */
+.matchstick-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Flame */
+.flame {
+  position: relative;
+  background: radial-gradient(circle at center bottom, #ff6b00, #ff4500, #ffa500);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  animation: flicker 0.3s ease-in-out infinite alternate;
+  margin-bottom: -5px;
+  z-index: 2;
+  transition: width 0.4s ease-out, height 0.4s ease-out;
+}
+
+.flame.flame-pulse {
+  animation: flicker 0.3s ease-in-out infinite alternate, flamePulse 0.6s ease-out;
+}
+
+.flame-inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 50%;
+  background: radial-gradient(circle at center, #ffff00, #ffa500);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  animation: flicker-inner 0.4s ease-in-out infinite alternate;
+}
+
+/* Additional flame layers for more intense fire */
+.flame-outer {
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle at center, rgba(255, 107, 0, 0.6), rgba(255, 69, 0, 0.4), transparent);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  animation: flicker-outer 0.5s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.flame-glow {
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140%;
+  height: 140%;
+  background: radial-gradient(circle at center, rgba(255, 165, 0, 0.5), rgba(255, 69, 0, 0.3), transparent);
+  border-radius: 50%;
+  animation: glow 0.6s ease-in-out infinite alternate;
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+@keyframes flicker {
+  0% {
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    transform: scale(1.05) translateY(-2px);
+  }
+}
+
+@keyframes flicker-inner {
+  0% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes flicker-outer {
+  0% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateX(-50%) scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes glow {
+  0% {
+    opacity: 0.3;
+    transform: translateX(-50%) scale(1);
+  }
+  100% {
+    opacity: 0.6;
+    transform: translateX(-50%) scale(1.2);
+  }
+}
+
+@keyframes flamePulse {
+  0% {
+    transform: scale(0.9) translateY(0);
+  }
+  50% {
+    transform: scale(1.15) translateY(-5px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Matchstick Head */
+.matchstick-head {
+  width: 12px;
+  height: 20px;
+  background: linear-gradient(180deg, #dc2626 0%, #991b1b 100%);
+  border-radius: 50% 50% 0 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Matchstick Stick */
+.matchstick {
+  width: 8px;
+  background: linear-gradient(180deg, #92400e 0%, #78350f 50%, #451a03 100%);
+  border-radius: 0 0 4px 4px;
+  position: relative;
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Wood Texture */
+.wood-texture {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.05) 2px,
+    rgba(0, 0, 0, 0.05) 3px
+  );
+  pointer-events: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .streak-container {
+    top: 50%;
+    right: 5px;
+    transform: translateY(-65%);
+  }
+  
+  .streak-number {
+    font-size: 1.25rem;
+  }
+}

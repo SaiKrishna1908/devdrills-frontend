@@ -21,12 +21,16 @@ type QuizProps = {
   setCanGoNext: (value: boolean) => void;
   isCorrectAnswer: boolean;
   setIsCorrectAnswer: (value: boolean) => void;
+  streak: number;
+  setStreak: (value: number | ((prev: number) => number)) => void;
 };
 
 export default function Quiz({
   currentQuestionIdx,
   isCorrectAnswer,
   setIsCorrectAnswer,
+  streak,
+  setStreak,
 }: QuizProps) {
   const [questions, setQuestions] = useState<[Question] | []>([]);
   const hasFetched = useRef(false);
@@ -125,6 +129,11 @@ export default function Quiz({
                 option === questions[currentQuestionIdx].expectedAnswer
               ) {
                 setIsCorrectAnswer(true);
+                // Increment streak on correct answer
+                setStreak((prev) => prev + 1);
+              } else {
+                // Reset streak on wrong answer
+                setStreak(0);
               }
 
               console.log(`Selected: ${option}`);

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import StartButton from "./StartButton";
 import Quiz from "../Quiz/Quiz";
+import Streak from "../Streak/Streak";
 import "./Home.css";
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
   const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
   const [page, setPage] = useState(0);
+  const [streak, setStreak] = useState(0);
   console.log(localStorage.getItem("token"));
 
   const getHasStartedExam = () => {
@@ -35,6 +37,9 @@ export default function Home() {
 
   return (
     <div className="relative flex flex-col w-full min-h-screen bg-[#ede1da] items-center justify-center">
+      {/* Streak Component */}
+      {hasStartedExam && <Streak streak={streak} />}
+      
       <button
         onClick={handleLogout}
         className="logout-button fixed top-4 right-4 px-5 py-2.5"
@@ -62,7 +67,9 @@ export default function Home() {
           currentQuestionIdx={currentQuestionIdx}
           setCanGoNext={setCanGoNext}
           isCorrectAnswer={isCorrectAnswer}
-          setIsCorrectAnswer={setIsCorrectAnswer}          
+          setIsCorrectAnswer={setIsCorrectAnswer}
+          streak={streak}
+          setStreak={setStreak}
         ></Quiz>
       ) : (
         <></>

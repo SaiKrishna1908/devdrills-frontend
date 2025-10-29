@@ -28,8 +28,7 @@ type QuizProps = {
 export default function Quiz({
   currentQuestionIdx,
   isCorrectAnswer,
-  setIsCorrectAnswer,
-  streak,
+  setIsCorrectAnswer,  
   setStreak,
 }: QuizProps) {
   const [questions, setQuestions] = useState<[Question] | []>([]);
